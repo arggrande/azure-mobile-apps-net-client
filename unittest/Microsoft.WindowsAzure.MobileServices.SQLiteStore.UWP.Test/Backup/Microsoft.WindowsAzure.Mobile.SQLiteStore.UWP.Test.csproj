@@ -5,25 +5,23 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{882C5B40-F18B-4873-AB65-392154F441DF}</ProjectGuid>
+    <ProjectGuid>{9220B6E2-0E5E-41E5-A990-98823F74C209}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.MobileServices.Test</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Mobile.UWP.Test</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.MobileServices.SQLiteStore.Test</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Mobile.SQLiteStore.UWP.Test</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>$(DefineConstants);TRACE;NETFX_CORE</DefineConstants>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TargetFrameworkVersion />
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <UapDefaultAssetScale>100</UapDefaultAssetScale>
-    <TargetFrameworkVersion />
-    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +43,6 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -72,7 +69,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -93,9 +90,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\src\Microsoft.Azure.Mobile.Client.SQLiteStore\Microsoft.Azure.Mobile.Client.SQLiteStore.csproj">
+      <Project>{99c2f464-172a-4b49-93b7-9b0e4fed1310}</Project>
+      <Name>Microsoft.Azure.Mobile.Client.SQLiteStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Mobile.Client\Microsoft.Azure.Mobile.Client.csproj">
       <Project>{04fc5444-1240-41d7-9aa8-648b9a465c9d}</Project>
       <Name>Microsoft.Azure.Mobile.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.MobileServices.SQLiteStore.Test\Microsoft.WindowsAzure.Mobile.SQLiteStore.Test.csproj">
+      <Project>{cd5d8a3a-5631-41bf-8161-8a2a7f892b71}</Project>
+      <Name>Microsoft.WindowsAzure.Mobile.SQLiteStore.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.MobileServices.TestFramework\Microsoft.WindowsAzure.Mobile.TestFramework.csproj">
       <Project>{3cffb62f-3384-4d71-badc-7542d5c31a9e}</Project>
@@ -111,8 +116,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestPlatform\CurrentTestPlatform.cs" />
-    <Compile Include="TestPlatform\PushTestUtility.cs" />
     <Compile Include="UI\GroupDescription.cs" />
     <Compile Include="UI\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -121,10 +124,6 @@
     <Compile Include="UI\TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UnitTests\AuthenticationBroker.Test.cs" />
-    <Compile Include="UnitTests\AuthenticationHelper.Test.cs" />
-    <Compile Include="UnitTests\Collections\IncrementalLoadingMobileServiceCollection.Test.cs" />
-    <Compile Include="UnitTests\PushUnit.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -150,16 +149,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\default.rd.xml" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <None Include="project.json" />
+    <Content Include="Properties\default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.2.6</Version>
-    </PackageReference>
+    <Folder Include="UnitTests\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
